@@ -1,0 +1,105 @@
+let cardArray=[
+  {
+    name:"cheeseburger",
+    img:"/Images/cheeseburger.png"
+  },
+  {
+    name:"fries",
+    img:"/Images/fries.png"
+  },
+  {
+    name:"ice-cream",
+    img:"/Images/ice-cream.png"
+  },
+  {
+    name:"pizza",
+    img:"/Images/pizza.png"
+  },
+  {
+    name:"hotdog",
+    img:"/Images/hotdog.png"
+  },
+  {
+    name:"milkshake",
+    img:"/Images/milkshake.png"
+  },
+    {
+    name:"cheeseburger",
+    img:"/Images/cheeseburger.png"
+  },
+  {
+    name:"fries",
+    img:"/Images/fries.png"
+  },
+  {
+    name:"ice-cream",
+    img:"/Images/ice-cream.png"
+  },
+  {
+    name:"pizza",
+    img:"/Images/pizza.png"
+  },
+  {
+    name:"hotdog",
+    img:"/Images/hotdog.png"
+  },
+  {
+    name:"milkshake",
+    img:"/Images/milkshake.png"
+  }
+  ]
+  
+let cardsdisplay =  document.querySelector(".grid")
+let resultdisplay =document.querySelector("#result")
+let chosenCards=[];
+let chosenCardsIds=[];
+let cardsWon =[];
+  
+  cardArray.sort(()=> 0.5 - Math.random())
+  
+  function DisplayCards(){
+    for (let i =0; i<cardArray.length;i++){
+   let cards =document.createElement("img")
+     cards.setAttribute("src","/Images/blank.png")
+     cards.setAttribute("data-id",i)
+     cardsdisplay.appendChild(cards);
+     cards.addEventListener("click", flipCard)
+    }
+  }
+  DisplayCards();
+  
+  
+  function flipCard () {
+  let cardsIds = this.getAttribute("data-id")
+  chosenCards.push(cardArray[cardsIds].name)
+  chosenCardsIds.push(cardsIds)
+  this.setAttribute("src",cardArray[cardsIds].img)
+  if (chosenCards.length ==2 ) {
+    setTimeout( MatchCards , 500);
+  }
+  
+  }
+  
+  function MatchCards() {
+    let cardsimg = document.querySelectorAll("img")
+     if(chosenCards[0] == chosenCards[1]){
+       alert("You found a match")
+       
+       cardsimg[chosenCardsIds[0]].setAttribute("src","/Images/white.png")
+       cardsimg[chosenCardsIds[1]].setAttribute("src","/Images/white.png")
+       cardsWon.push(chosenCards)
+       resultdisplay.innerHTML=cardsWon.length
+       cardsimg[chosenCardsIds[0]].removeEventListener("click",flipCard)
+       cardsimg[chosenCardsIds[1]].removeEventListener("click",flipCard)
+     }
+     else {
+       alert("Try again")
+       cardsimg[chosenCardsIds[0]].setAttribute("src","/Images/blank.png")
+       cardsimg[chosenCardsIds[1]].setAttribute("src","/Images/blank.png")
+     }
+     if(cardsWon.length == cardArray.length/2){
+       resultdisplay.textContent="Congratulations You have found the all cards"
+     }
+     chosenCards=[]
+     chosenCardsIds=[]
+  }
